@@ -65,12 +65,35 @@ class PasswordPolicy extends Plugin
     // Traits
     // =========================================================================
 
+    // Constant Properties
+    // =========================================================================
+    /**
+     * Lite
+     */
+    public const EDITION_LITE = 'lite';
+
+    /**
+     * Pro
+     */
+    public const EDITION_PRO = 'pro';
+
     // Static Properties
     // =========================================================================
     /**
      * @var ?PasswordPolicy
      */
     public static ?PasswordPolicy $plugin = null;
+
+    /**
+     * @inheritdoc
+     */
+    public static function editions(): array
+    {
+        return [
+            self::EDITION_LITE,
+            self::EDITION_PRO,
+        ];
+    }
 
     // Public Properties
     // =========================================================================
@@ -173,6 +196,26 @@ class PasswordPolicy extends Plugin
         $message = Craft::t('password-policy', $message . ' ' . $encoded_params, $params);
 
         Craft::getLogger()->log($message, $type, 'password-policy');
+    }
+
+    /**
+     * Returns true if lite version.
+     *
+     * @return bool
+     */
+    public function getIsLite(): bool
+    {
+        return $this->is(self::EDITION_LITE);
+    }
+
+    /**
+     * Returns true if pro version.
+     *
+     * @return bool
+     */
+    public function getIsPro(): bool
+    {
+        return $this->is(self::EDITION_PRO);
     }
 
     /**
